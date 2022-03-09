@@ -11,7 +11,9 @@
         android:theme="@style/Theme.Pangan.Starting">
         <activity
             android:name=".ui.auth.register.RegisterActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:theme="@style/Theme.Pangan.NoActionBar"
+            />
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -11,4 +11,7 @@
 <!--    Pangan's Color-->
     <color name="main">#FFE17474</color>
     <color name="main_2">#FFC4C4C4</color>
+    <color name="grey_ed">#FFEDEDED</color>
+    <color name="grey_66">#FF666666</color>
+    <color name="yellow_light">#FFF3F1E6</color>
 </resources>
