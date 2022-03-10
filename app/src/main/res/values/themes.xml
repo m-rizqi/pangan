@@ -1,6 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.Pangan.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:colorEdgeEffect">@color/main</item>
+        <item name="colorPrimary">@color/main</item>
+        <item name="colorAccent">@color/main</item>
     </style>
 
 
