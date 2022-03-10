@@ -8,37 +8,83 @@
     android:background="@color/white"
     >
 
-    <ImageView
-        android:id="@+id/imageViewFood2Background"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_food_2_background"
-        android:layout_marginTop="-4dp"
-        android:scaleType="centerCrop"
-        />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="420dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/accountsetup_roundcorner"
+        android:scrollbars="none"
         >
 
-        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-            android:id="@+id/dotIndicatorAccountSetup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="12dp"
-            app:dotsColor="@color/main_2"
-            app:dotsStrokeColor="@android:color/transparent"
-            app:dotsSize="9dp"
-            app:dotsSpacing="6dp"
-            />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/imageViewFood2Background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_food_2_background"
+                android:layout_marginTop="-32dp"
+                android:scaleType="centerCrop"
+                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/accountsetup_roundcorner"
+                android:layout_marginTop="280dp"
+                >
+
+                <com.mazenrashed.dotsindicator.DotsIndicator
+                    android:id="@+id/dotIndicatorAccountSetup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:dots_count="3"
+                    app:dot_height="6dp"
+                    app:dot_width="6dp"
+                    app:unselected_dot_resource="@drawable/grey_circle"
+                    app:selected_dot_resource="@drawable/orange_circle"
+                    app:first_selected_dot_resource="@drawable/orange_circle"
+                    app:first_unselected_dot_resource="@drawable/grey_circle"
+                    app:first_dot_height="6dp"
+                    app:first_dot_width="6dp"
+                    app:margins_between_dots="6dp"
+                    app:selected_dot_scale_factor="1.2"
+                    android:paddingHorizontal="8dp"
+                    android:clipToPadding="false"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/dotIndicatorAccountSetup"
+                    android:layout_marginTop="20dp"
+                    >
+
+                    <fragment
+                        android:id="@+id/navHostFragmentAccountSetup"
+                        android:name="androidx.navigation.fragment.NavHostFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:defaultNavHost="true"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:navGraph="@navigation/accountsetup_nav_graph" />
+
+                </RelativeLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

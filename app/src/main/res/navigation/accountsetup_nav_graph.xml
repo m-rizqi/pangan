@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/accountSetup1Fragment">
+    <fragment
+        android:id="@+id/accountSetup1Fragment"
+        android:name="com.satulima.pangan.ui.auth.setup.AccountSetup1Fragment"
+        android:label="fragment_account_setup1"
+        tools:layout="@layout/fragment_account_setup1" />
+</navigation>

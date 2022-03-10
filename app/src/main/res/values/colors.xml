@@ -13,5 +13,8 @@
     <color name="main_2">#FFC4C4C4</color>
     <color name="grey_ed">#FFEDEDED</color>
     <color name="grey_66">#FF666666</color>
+    <color name="grey_33">#FF333333</color>
+    <color name="grey_99">#999999</color>
+    <color name="grey_18">#4D181818</color>
     <color name="yellow_light">#FFF3F1E6</color>
 </resources>
