@@ -10,10 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pangan.Starting">
         <activity
+            android:name=".ui.auth.setup.AccountSetupActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Pangan.NoActionBar"/>
+        <activity
             android:name=".ui.auth.register.RegisterActivity"
             android:exported="true"
-            android:theme="@style/Theme.Pangan.NoActionBar"
-            />
+            android:theme="@style/Theme.Pangan.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
