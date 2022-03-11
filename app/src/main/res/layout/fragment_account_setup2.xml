@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.auth.setup.AccountSetup2Fragment"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/textView1Setup2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="Tell us about yourself"
+            android:textColor="@color/main"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="20sp"
+            />
+
+        <TextView
+            android:id="@+id/textView2Setup2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView1Setup2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="Provide your personal information"
+            android:textColor="@color/grey_66"
+            android:fontFamily="@font/poppins"
+            android:textSize="10sp"
+            />
+
+        <TextView
+            android:id="@+id/textView3Setup2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView2Setup2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="First Name"
+            android:textColor="@color/grey_33"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="14sp"
+            android:layout_marginTop="20dp"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayoutFirstname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView3Setup2"
+            app:boxStrokeColor="@color/grey_99"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxBackgroundColor="@color/white"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextFirstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:inputType="text"
+                android:textColor="@color/grey_66"
+                android:fontFamily="@font/poppins"
+                android:textSize="12sp"
+                android:paddingVertical="8dp"
+                android:paddingHorizontal="0dp"
+                android:imeOptions="actionNext"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView4Setup2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/inputLayoutFirstname"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="Last Name"
+            android:textColor="@color/grey_33"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="14sp"
+            android:layout_marginTop="14dp"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayoutLastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView4Setup2"
+            app:boxStrokeColor="@color/grey_99"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxBackgroundColor="@color/white"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextLastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:inputType="text"
+                android:textColor="@color/grey_66"
+                android:fontFamily="@font/poppins"
+                android:textSize="12sp"
+                android:paddingVertical="8dp"
+                android:paddingHorizontal="0dp"
+                android:imeOptions="actionNext"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView5Setup2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/inputLayoutLastname"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="Gender"
+            android:textColor="@color/grey_33"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="14sp"
+            android:layout_marginTop="14dp"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayoutGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView5Setup2"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            app:boxStrokeColor="@color/grey_99"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxBackgroundColor="@color/white"
+            app:endIconTint="@color/black"
+            app:endIconCheckable="true"
+            app:endIconDrawable="@drawable/dropdown_arrow"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_33"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="14sp"
+                android:paddingVertical="8dp"
+                android:text="---"
+                android:inputType="none"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

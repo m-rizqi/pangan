@@ -8,6 +8,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.satulima.pangan.R
 import com.satulima.pangan.databinding.ActivityRegisterBinding
 import com.satulima.pangan.ui.auth.setup.AccountSetupActivity
+import com.satulima.pangan.utility.WindowUtility
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -18,7 +19,8 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        window.statusBarColor  = resources.getColor(R.color.yellow_light)
+        WindowUtility.setFullScreen(window)
+        WindowUtility.lightStatusBar(window)
     }
 
     override fun onStart() {
@@ -26,5 +28,9 @@ class RegisterActivity : AppCompatActivity() {
         binding.buttonRegisterWithEmail.setOnClickListener {
             startActivity(Intent(this, AccountSetupActivity::class.java))
         }
+    }
+
+    override fun onBackPressed() {
+
     }
 }
