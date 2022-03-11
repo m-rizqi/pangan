@@ -49,5 +49,4 @@ dependencies {
 
     implementation 'androidx.core:core-splashscreen:1.0.0-alpha02'
     implementation 'com.github.mazenrashed:DotsIndicatorWithoutViewpager:1.0.0'
-
 }

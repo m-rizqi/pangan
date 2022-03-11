@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.auth.setup.AccountSetupActivity"
-    android:background="@color/white"
     >
 
     <ScrollView
@@ -13,6 +12,7 @@
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         android:scrollbars="none"
+        android:background="@color/white"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/ic_food_2_background"
-                android:layout_marginTop="-32dp"
+                android:layout_marginTop="0dp"
                 android:scaleType="centerCrop"
                 />
 
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 android:background="@drawable/accountsetup_roundcorner"
-                android:layout_marginTop="280dp"
+                android:layout_marginTop="310dp"
                 >
 
                 <com.mazenrashed.dotsindicator.DotsIndicator
