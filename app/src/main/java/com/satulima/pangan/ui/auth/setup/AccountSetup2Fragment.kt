@@ -2,11 +2,15 @@ package com.satulima.pangan.ui.auth.setup
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.satulima.pangan.R
 import com.satulima.pangan.databinding.FragmentAccountSetup2Binding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -38,6 +42,12 @@ class AccountSetup2Fragment : Fragment() {
     ): View? {
         _binding = FragmentAccountSetup2Binding.inflate(inflater, container, false)
         val root: View = binding.root
+        val gender = resources.getStringArray(R.array.gender)
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, gender)
+        binding.autoCompleteGender.setAdapter(arrayAdapter)
+        binding.autoCompleteGender.setDropDownBackgroundDrawable(
+            ColorDrawable(ContextCompat.getColor(requireContext(), R.color.white))
+        )
 
         return root
     }
