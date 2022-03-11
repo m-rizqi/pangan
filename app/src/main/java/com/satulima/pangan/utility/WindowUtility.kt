@@ -14,6 +14,7 @@ class WindowUtility {
             val wic = WindowInsetsControllerCompat(window, window.decorView)
             wic.isAppearanceLightStatusBars = isLight
             wic.isAppearanceLightNavigationBars = isLight
+
         }
     }
 }
