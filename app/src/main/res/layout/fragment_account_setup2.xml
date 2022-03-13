@@ -109,7 +109,7 @@
                 android:textSize="12sp"
                 android:paddingVertical="8dp"
                 android:paddingHorizontal="0dp"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
