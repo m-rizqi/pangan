@@ -3,21 +3,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/accountSetup3Fragment">
+    app:startDestination="@id/accountSetup1Fragment">
     <fragment
         android:id="@+id/accountSetup1Fragment"
         android:name="com.satulima.pangan.ui.auth.setup.AccountSetup1Fragment"
         android:label="fragment_account_setup1"
-        tools:layout="@layout/fragment_account_setup1" />
+        tools:layout="@layout/fragment_account_setup1" >
+        <action
+            android:id="@+id/setup1ToSetup2"
+            app:destination="@id/accountSetup2Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <argument
+            android:name="isByGoogle"
+            app:argType="boolean" />
+        <argument
+            android:name="newUser"
+            app:argType="com.satulima.pangan.entity.User" />
+    </fragment>
     <fragment
         android:id="@+id/accountSetup2Fragment"
         android:name="com.satulima.pangan.ui.auth.setup.AccountSetup2Fragment"
         android:label="fragment_account_setup2"
-        tools:layout="@layout/fragment_account_setup2" />
+        tools:layout="@layout/fragment_account_setup2" >
+        <action
+            android:id="@+id/setup2ToSetup3"
+            app:destination="@id/accountSetup3Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/setup2ToSetup1"
+            app:destination="@id/accountSetup1Fragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="isByGoogle"
+            app:argType="boolean" />
+        <argument
+            android:name="newUser"
+            app:argType="com.satulima.pangan.entity.User" />
+    </fragment>
     <fragment
         android:id="@+id/accountSetup3Fragment"
         android:name="com.satulima.pangan.ui.auth.setup.AccountSetup3Fragment"
         android:label="fragment_account_setup3"
         tools:layout="@layout/fragment_account_setup3"
-        />
+        >
+        <action
+            android:id="@+id/setup3ToSetup2"
+            app:destination="@id/accountSetup2Fragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="isByGoogle"
+            app:argType="boolean" />
+        <argument
+            android:name="newUser"
+            app:argType="com.satulima.pangan.entity.User" />
+    </fragment>
 </navigation>

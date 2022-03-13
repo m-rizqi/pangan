@@ -13,11 +13,6 @@
             android:name=".ui.auth.setup.AccountSetupActivity"
             android:exported="true"
             android:theme="@style/Theme.Pangan.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.auth.register.RegisterActivity"
@@ -28,9 +23,11 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Pangan.Starting">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

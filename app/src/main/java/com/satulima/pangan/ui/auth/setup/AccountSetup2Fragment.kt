@@ -8,33 +8,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
+import com.mazenrashed.dotsindicator.DotsIndicator
 import com.satulima.pangan.R
 import com.satulima.pangan.databinding.FragmentAccountSetup2Binding
+import com.satulima.pangan.entity.User
 import java.text.SimpleDateFormat
 import java.util.*
-
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 class AccountSetup2Fragment : Fragment() {
 
     private var _binding : FragmentAccountSetup2Binding? = null
     private val binding get() = _binding!!
-    val myCalendar: Calendar = Calendar.getInstance()
-
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val myCalendar: Calendar = Calendar.getInstance()
+    private val args: AccountSetup2FragmentArgs by navArgs()
+    private lateinit var newUser: User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +47,21 @@ class AccountSetup2Fragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        newUser = args.newUser
+
+        if (args.isByGoogle){
+            // Register by Google
+            activity?.findViewById<DotsIndicator>(R.id.dotIndicatorAccountSetup)?.setDotSelection(0)
+            binding.buttonNext.visibility = View.VISIBLE
+            binding.relativeLayoutPrevNext.visibility = View.GONE
+
+        }else{
+            // Register by Email
+            activity?.findViewById<DotsIndicator>(R.id.dotIndicatorAccountSetup)?.setDotSelection(1)
+            binding.buttonNext.visibility = View.GONE
+            binding.relativeLayoutPrevNext.visibility = View.VISIBLE
+        }
+
         binding.editTextBirthday.setOnClickListener {
             DatePickerDialog(
                 this.requireContext(),
@@ -63,6 +71,25 @@ class AccountSetup2Fragment : Fragment() {
                 myCalendar[Calendar.DAY_OF_MONTH]
             ).show()
         }
+        binding.buttonNext.setOnClickListener { navigateToNextSetup(it) }
+        binding.buttonRlNext.setOnClickListener { navigateToNextSetup(it) }
+        binding.buttonRlPrev.setOnClickListener {
+            val action = AccountSetup2FragmentDirections.setup2ToSetup1(args.isByGoogle, newUser)
+            Navigation.findNavController(it).navigate(action)
+        }
+
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(this, object : OnBackPressedCallback(true){
+                override fun handleOnBackPressed() {
+                    if (args.isByGoogle){
+                        activity?.finish()
+                    }else{
+                        val action = AccountSetup2FragmentDirections.setup2ToSetup1(args.isByGoogle, newUser)
+                        Navigation.findNavController(binding.root).navigate(action)
+                    }
+                }
+            })
     }
 
     override fun onDestroyView() {
@@ -85,6 +112,11 @@ class AccountSetup2Fragment : Fragment() {
         val myFormat = "dd/MM/yyyy"
         val dateFormat = SimpleDateFormat(myFormat, Locale.US)
         binding.editTextBirthday.setText(dateFormat.format(myCalendar.time))
+    }
+
+    private fun navigateToNextSetup(view: View){
+        val action = AccountSetup2FragmentDirections.setup2ToSetup3(args.isByGoogle, newUser)
+        Navigation.findNavController(view).navigate(action)
     }
 
 }

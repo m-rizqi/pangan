@@ -6,6 +6,7 @@
         <entry key="..\:/UGM/GDSC/Pangan/app/src/main/res/drawable/cursor_color.xml" value="0.1" />
         <entry key="..\:/UGM/GDSC/Pangan/app/src/main/res/drawable/dropdown_arrow.xml" value="0.1" />
         <entry key="..\:/UGM/GDSC/Pangan/app/src/main/res/drawable/grey_circle.xml" value="0.1" />
+        <entry key="..\:/UGM/GDSC/Pangan/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.1" />
         <entry key="..\:/UGM/GDSC/Pangan/app/src/main/res/drawable/ic_calendar.xml" value="0.1" />
         <entry key="..\:/UGM/GDSC/Pangan/app/src/main/res/drawable/ic_google_logo.xml" value="0.1" />
         <entry key="..\:/UGM/GDSC/Pangan/app/src/main/res/drawable/orange_circle.xml" value="0.1" />
@@ -17,7 +18,7 @@
         <entry key="..\:/UGM/GDSC/Pangan/app/src/main/res/layout/dropdown_item.xml" value="0.1" />
         <entry key="..\:/UGM/GDSC/Pangan/app/src/main/res/layout/fragment_account_setup1.xml" value="0.1" />
         <entry key="..\:/UGM/GDSC/Pangan/app/src/main/res/layout/fragment_account_setup2.xml" value="0.22" />
-        <entry key="..\:/UGM/GDSC/Pangan/app/src/main/res/layout/fragment_account_setup3.xml" value="0.3333333333333333" />
+        <entry key="..\:/UGM/GDSC/Pangan/app/src/main/res/layout/fragment_account_setup3.xml" value="0.16666666666666666" />
       </map>
     </option>
   </component>
