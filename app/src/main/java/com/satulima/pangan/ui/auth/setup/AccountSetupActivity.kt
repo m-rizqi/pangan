@@ -1,9 +1,7 @@
 package com.satulima.pangan.ui.auth.setup
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.satulima.pangan.R
@@ -24,7 +22,6 @@ class AccountSetupActivity : AppCompatActivity() {
 
         navController = findNavController(R.id.navHostFragmentAccountSetup)
 
-        WindowUtility.setFullScreen(window)
-        WindowUtility.lightStatusBar(window, false)
+        WindowUtility.setTransparentStatusBar(window)
     }
 }

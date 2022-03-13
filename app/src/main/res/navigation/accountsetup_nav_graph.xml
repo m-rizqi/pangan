@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/accountSetup2Fragment">
+    app:startDestination="@id/accountSetup3Fragment">
     <fragment
         android:id="@+id/accountSetup1Fragment"
         android:name="com.satulima.pangan.ui.auth.setup.AccountSetup1Fragment"
@@ -14,4 +14,10 @@
         android:name="com.satulima.pangan.ui.auth.setup.AccountSetup2Fragment"
         android:label="fragment_account_setup2"
         tools:layout="@layout/fragment_account_setup2" />
+    <fragment
+        android:id="@+id/accountSetup3Fragment"
+        android:name="com.satulima.pangan.ui.auth.setup.AccountSetup3Fragment"
+        android:label="fragment_account_setup3"
+        tools:layout="@layout/fragment_account_setup3"
+        />
 </navigation>

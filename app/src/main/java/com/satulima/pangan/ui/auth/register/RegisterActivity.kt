@@ -3,9 +3,6 @@ package com.satulima.pangan.ui.auth.register
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.res.ResourcesCompat
-import com.satulima.pangan.R
 import com.satulima.pangan.databinding.ActivityRegisterBinding
 import com.satulima.pangan.ui.auth.setup.AccountSetupActivity
 import com.satulima.pangan.utility.WindowUtility
@@ -19,8 +16,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        WindowUtility.setFullScreen(window)
-        WindowUtility.lightStatusBar(window)
+        WindowUtility.setTransparentStatusBar(window)
     }
 
     override fun onStart() {
