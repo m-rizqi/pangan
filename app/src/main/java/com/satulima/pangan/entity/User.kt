@@ -6,7 +6,7 @@ import java.util.*
 
 @Parcelize
 data class User(
-    val email: String,
+    var email: String,
     var firstName: String,
     var lastName: String,
     val gender: String,

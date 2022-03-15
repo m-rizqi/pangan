@@ -129,7 +129,7 @@
             app:layout_constraintTop_toBottomOf="@id/textView5Setup1">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextCOnfirmPassword"
+                android:id="@+id/editTextConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
@@ -143,6 +143,19 @@
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBarRegisterEmail"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/inputLayoutConfirmPassword"
+            android:layout_marginTop="72dp"
+            android:visibility="invisible"
+            android:progressTint="@color/main"
+            />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonNext"
@@ -161,7 +174,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/inputLayoutConfirmPassword" />
+            app:layout_constraintTop_toBottomOf="@id/inputLayoutConfirmPassword"
+            android:visibility="visible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -21,8 +21,6 @@ class AccountSetupActivity : AppCompatActivity() {
         binding = ActivityAccountSetupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        window.statusBarColor  = resources.getColor(R.color.grey_18)
-
         navController = findNavController(R.id.navHostFragmentAccountSetup)
 
         WindowUtility.setTransparentStatusBar(window)
