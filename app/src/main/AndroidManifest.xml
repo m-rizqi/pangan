@@ -18,6 +18,10 @@
             android:name=".ui.auth.setup.AccountSetupActivity"
             android:exported="true"
             android:theme="@style/Theme.Pangan.NoActionBar">
+            <intent-filter>
+                <action android:name=".ui.auth.setup.AccountSetupActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.auth.register.RegisterActivity"

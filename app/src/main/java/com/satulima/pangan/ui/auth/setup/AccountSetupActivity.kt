@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.satulima.pangan.R
 import com.satulima.pangan.databinding.ActivityAccountSetupBinding
 import com.satulima.pangan.entity.User
@@ -28,6 +29,7 @@ class AccountSetupActivity : AppCompatActivity() {
 
         val isByGoogle = intent.getBooleanExtra("isByGoogle", false)
         val newUser = intent.getParcelableExtra<User>("newUser")
+        val googleAccount = intent.getParcelableExtra<GoogleSignInAccount>("googleAccount")
 
         val navHost = supportFragmentManager.findFragmentById(R.id.navHostFragmentAccountSetup) as NavHostFragment
         val graph = navHost.navController.navInflater.inflate(R.navigation.accountsetup_nav_graph)
@@ -41,10 +43,10 @@ class AccountSetupActivity : AppCompatActivity() {
             binding.dotIndicatorAccountSetup.initDots(3)
             graph.setStartDestination(R.id.accountSetup1Fragment)
         }
-        graph.setStartDestination(R.id.accountSetup3Fragment)
         val args = Bundle()
         args.putBoolean("isByGoogle", isByGoogle)
         args.putParcelable("newUser", newUser)
+        args.putParcelable("googleAccount", googleAccount)
 
         navHost.navController.setGraph(graph,args)
 

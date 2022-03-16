@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -34,24 +33,25 @@ class AccountSetup2Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAccountSetup2Binding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        newUser = args.newUser
+
+
+        binding.editTextFirstname.setText(newUser.firstName)
+        binding.editTextLastname.setText(newUser.lastName)
+        binding.autoCompleteGender.setText(newUser.gender.ifBlank { "---" })
+        binding.editTextBirthday.setText(newUser.getBirthday())
+
         val gender = resources.getStringArray(R.array.gender)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, gender)
         binding.autoCompleteGender.setAdapter(arrayAdapter)
         binding.autoCompleteGender.setDropDownBackgroundDrawable(
             ColorDrawable(ContextCompat.getColor(requireContext(), R.color.white))
         )
-
-        return root
-    }
-
-    override fun onStart() {
-        super.onStart()
-        newUser = args.newUser
-        binding.editTextFirstname.setText(newUser.firstName)
-        binding.editTextLastname.setText(newUser.lastName)
-        binding.autoCompleteGender.setText(newUser.gender)
-        binding.editTextBirthday.setText(newUser.getBirthday())
 
         if (args.isByGoogle){
             // Register by Google
@@ -120,9 +120,11 @@ class AccountSetup2Fragment : Fragment() {
     }
 
     private fun navigateToNextSetup(view: View){
-        updateNewUser()
-        val action = AccountSetup2FragmentDirections.setup2ToSetup3(args.isByGoogle, newUser)
-        Navigation.findNavController(view).navigate(action)
+        if (validateInput()){
+            updateNewUser()
+            val action = AccountSetup2FragmentDirections.setup2ToSetup3(args.isByGoogle, newUser, args.googleAccount)
+            Navigation.findNavController(view).navigate(action)
+        }
     }
 
     private fun updateNewUser(){
@@ -130,6 +132,38 @@ class AccountSetup2Fragment : Fragment() {
         newUser.lastName = binding.editTextLastname.text.toString()
         newUser.gender = binding.autoCompleteGender.text.toString()
         newUser.setBirthday(binding.editTextBirthday.text.toString())
+    }
+
+    private fun validateInput(): Boolean{
+        var isValid = true
+        if (binding.editTextFirstname.text.isNullOrBlank()){
+            isValid = false
+            binding.inputLayoutFirstname.error = "Firstname can't be empty"
+            binding.inputLayoutFirstname.isErrorEnabled = true
+            binding.inputLayoutFirstname.requestFocus()
+        }else{
+            binding.inputLayoutFirstname.isErrorEnabled = false
+        }
+
+        if (binding.autoCompleteGender.text.toString() == "---"){
+            isValid = false
+            binding.inputLayoutGender.error = "Gender can't be empty"
+            binding.inputLayoutGender.isErrorEnabled = true
+            binding.inputLayoutGender.requestFocus()
+        }else{
+            binding.inputLayoutGender.isErrorEnabled = false
+        }
+
+        if (binding.editTextBirthday.text.isNullOrBlank()){
+            isValid = false
+            binding.inputLayoutBirthday.error = "Birthday can't be empty"
+            binding.inputLayoutBirthday.isErrorEnabled = true
+            binding.inputLayoutBirthday.requestFocus()
+        }else{
+            binding.inputLayoutBirthday.isErrorEnabled = false
+        }
+
+        return isValid
     }
 
 }

@@ -42,6 +42,9 @@
         <argument
             android:name="newUser"
             app:argType="com.satulima.pangan.entity.User" />
+        <argument
+            android:name="googleAccount"
+            app:argType="com.google.android.gms.auth.api.signin.GoogleSignInAccount" />
     </fragment>
     <fragment
         android:id="@+id/accountSetup3Fragment"
@@ -60,5 +63,8 @@
         <argument
             android:name="newUser"
             app:argType="com.satulima.pangan.entity.User" />
+        <argument
+            android:name="googleAccount"
+            app:argType="com.google.android.gms.auth.api.signin.GoogleSignInAccount" />
     </fragment>
 </navigation>

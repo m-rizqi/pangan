@@ -173,7 +173,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/buttonRlRegister"
                 app:layout_constraintLeft_toLeftOf="@id/buttonRlRegister"
                 app:layout_constraintRight_toRightOf="@id/buttonRlRegister"
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:progressTint="@color/main"
                 />
 

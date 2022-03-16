@@ -11,6 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.mazenrashed.dotsindicator.DotsIndicator
 import com.satulima.pangan.R
 import com.satulima.pangan.databinding.FragmentAccountSetup1Binding
@@ -44,7 +45,7 @@ class AccountSetup1Fragment : Fragment() {
             if (validateEmailPassword()){
                 newUser.email = binding.editTextEmail.text.toString()
                 newUser.password = binding.editTextPassword.text.toString()
-                val action = AccountSetup1FragmentDirections.setup1ToSetup2(args.isByGoogle, newUser)
+                val action = AccountSetup1FragmentDirections.setup1ToSetup2(args.isByGoogle, newUser, GoogleSignInAccount.createDefault())
                 Navigation.findNavController(view).navigate(action)
             }
         }
@@ -62,9 +63,10 @@ class AccountSetup1Fragment : Fragment() {
         var isValid = true
 
         val emailText = binding.editTextEmail.text.toString()
-        if (emailText.isNullOrBlank()){
+        val isBadEmail = !Patterns.EMAIL_ADDRESS.matcher(emailText).matches()
+        if (isBadEmail){
             isValid = false
-            binding.inputLayoutEmail.error = if (Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) "The input is not an email format" else "Email can't be empty"
+            binding.inputLayoutEmail.error = "The input is not an email format"
             binding.inputLayoutEmail.isErrorEnabled = true
             binding.inputLayoutEmail.requestFocus()
         }else{

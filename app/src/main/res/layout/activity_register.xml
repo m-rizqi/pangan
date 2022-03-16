@@ -71,6 +71,18 @@
             android:layout_marginHorizontal="49dp"
             />
 
+        <ProgressBar
+            android:id="@+id/progressBarRegisterGoogle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toTopOf="@id/buttonRegisterWithGoogle"
+            app:layout_constraintBottom_toBottomOf="@id/buttonRegisterWithGoogle"
+            app:layout_constraintLeft_toLeftOf="@id/buttonRegisterWithGoogle"
+            app:layout_constraintRight_toRightOf="@id/buttonRegisterWithGoogle"
+            android:visibility="invisible"
+            android:progressTint="@color/main"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
