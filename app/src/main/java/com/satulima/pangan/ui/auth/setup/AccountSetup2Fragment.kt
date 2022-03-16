@@ -48,6 +48,10 @@ class AccountSetup2Fragment : Fragment() {
     override fun onStart() {
         super.onStart()
         newUser = args.newUser
+        binding.editTextFirstname.setText(newUser.firstName)
+        binding.editTextLastname.setText(newUser.lastName)
+        binding.autoCompleteGender.setText(newUser.gender)
+        binding.editTextBirthday.setText(newUser.getBirthday())
 
         if (args.isByGoogle){
             // Register by Google
@@ -74,6 +78,7 @@ class AccountSetup2Fragment : Fragment() {
         binding.buttonNext.setOnClickListener { navigateToNextSetup(it) }
         binding.buttonRlNext.setOnClickListener { navigateToNextSetup(it) }
         binding.buttonRlPrev.setOnClickListener {
+            updateNewUser()
             val action = AccountSetup2FragmentDirections.setup2ToSetup1(args.isByGoogle, newUser)
             Navigation.findNavController(it).navigate(action)
         }
@@ -115,8 +120,16 @@ class AccountSetup2Fragment : Fragment() {
     }
 
     private fun navigateToNextSetup(view: View){
+        updateNewUser()
         val action = AccountSetup2FragmentDirections.setup2ToSetup3(args.isByGoogle, newUser)
         Navigation.findNavController(view).navigate(action)
+    }
+
+    private fun updateNewUser(){
+        newUser.firstName = binding.editTextFirstname.text.toString()
+        newUser.lastName = binding.editTextLastname.text.toString()
+        newUser.gender = binding.autoCompleteGender.text.toString()
+        newUser.setBirthday(binding.editTextBirthday.text.toString())
     }
 
 }

@@ -1,8 +1,8 @@
 package com.satulima.pangan.ui.auth.setup
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -10,6 +10,7 @@ import com.satulima.pangan.R
 import com.satulima.pangan.databinding.ActivityAccountSetupBinding
 import com.satulima.pangan.entity.User
 import com.satulima.pangan.utility.WindowUtility
+
 
 class AccountSetupActivity : AppCompatActivity() {
 
@@ -40,11 +41,16 @@ class AccountSetupActivity : AppCompatActivity() {
             binding.dotIndicatorAccountSetup.initDots(3)
             graph.setStartDestination(R.id.accountSetup1Fragment)
         }
+        graph.setStartDestination(R.id.accountSetup3Fragment)
         val args = Bundle()
         args.putBoolean("isByGoogle", isByGoogle)
         args.putParcelable("newUser", newUser)
 
         navHost.navController.setGraph(graph,args)
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }
