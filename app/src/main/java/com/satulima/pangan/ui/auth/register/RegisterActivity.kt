@@ -12,12 +12,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.satulima.pangan.R
 import com.satulima.pangan.databinding.ActivityRegisterBinding
 import com.satulima.pangan.entity.User
-import com.satulima.pangan.ui.auth.setup.AccountSetupActivity
-import com.satulima.pangan.utility.WindowUtility
+import com.satulima.pangan.utility.setTransparentStatusBar
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
@@ -34,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        WindowUtility.setTransparentStatusBar(window)
+        setTransparentStatusBar(window)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))

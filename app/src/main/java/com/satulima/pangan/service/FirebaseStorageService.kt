@@ -13,7 +13,8 @@ class FirebaseStorageService {
         return flow {
             val imageReference = storageReference.child("users/${imageName}.jpg")
             imageReference.putFile(uri).await()
-            emit(StatusState.success(imageReference.downloadUrl.result.toString()))
+            val url = imageReference.downloadUrl.await()
+            emit(StatusState.success(url.toString()))
         }
     }
 }

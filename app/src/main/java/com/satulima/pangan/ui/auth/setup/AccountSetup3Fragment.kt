@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +35,9 @@ import com.satulima.pangan.ui.auth.AuthViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
+import java.lang.Exception
 
 class AccountSetup3Fragment : Fragment() {
 
@@ -80,24 +83,8 @@ class AccountSetup3Fragment : Fragment() {
                 binding.inputLayoutUsername.requestFocus()
             }else{
                 binding.inputLayoutUsername.isErrorEnabled = false
-                if (photoUri != null  && photoUri.toString().isNotBlank()){
-                    uploadPhoto()
-                }
                 if (args.isByGoogle){
-                    binding.buttonRlRegister.visibility = View.INVISIBLE
-                    val credential = GoogleAuthProvider.getCredential(args.googleAccount.idToken, null)
-                    val firebaseAuth = FirebaseAuth.getInstance()
-                    firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
-                        if (task.isSuccessful){
-                            updateNewUser()
-                            newUser.profilePicture = args.googleAccount.photoUrl.toString()
-                            Toast.makeText(requireContext(), "Register Success : $newUser", Toast.LENGTH_SHORT).show()
-                            firebaseAuth.signOut()
-                        }else{
-                            Toast.makeText(requireContext(), task.exception?.message.toString(), Toast.LENGTH_SHORT)
-                        }
-                        binding.buttonRlRegister.visibility = View.VISIBLE
-                    }
+                    registerByGoogle()
                 }else{
                     registerByEmail(it)
                 }
@@ -123,57 +110,92 @@ class AccountSetup3Fragment : Fragment() {
         newUser.username = binding.editTextUsername.text.toString()
     }
 
-    private fun uploadPhoto(){
-        authViewModel.uploadPhoto(photoUri!!, "${newUser.email}_${binding.editTextUsername.text.toString()}")
+    private fun registerByGoogle(){
+        val credential = GoogleAuthProvider.getCredential(args.googleAccount.idToken, null)
+        val firebaseAuth = FirebaseAuth.getInstance()
         lifecycleScope.launch {
+            showProgressBar()
+            val result = firebaseAuth.signInWithCredential(credential).await()
+            try{
+                updateNewUser()
+                result.user?.let { user->
+                    newUser.id = user.uid
+                }
+                createNewUser(newUser)
+                firebaseAuth.signOut()
+            }catch (e: Exception){
+                Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_SHORT)
+            }
+            hideProgressBar()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    private fun registerByEmail(view: View){
+        lifecycleScope.launch {
+        updateNewUser()
+        authViewModel.registerWithEmail(newUser.email, newUser.password)
+            authViewModel.registerWithEmailState.collect {
+                when(it.status) {
+                        Status.LOADING -> showProgressBar()
+                        Status.SUCCESS -> {
+                            it.data?.let{data ->
+                                newUser.id = data.uid
+                            }
+                            createNewUser(newUser)
+                            FirebaseAuth.getInstance().signOut()
+                        }
+                    else -> {
+                        hideProgressBar()
+                            it.message?.let {msg ->
+                                Toast.makeText(context,"Register Failed : $msg", Toast.LENGTH_SHORT).show()
+                                Log.d("auth", "Register Failed: $msg")
+                            }
+                        }
+                }
+            }
+        }
+    }
+
+    private suspend fun createNewUser(user: User){
+        if (photoUri != null && photoUri.toString().isNotBlank()){
+            authViewModel.uploadPhoto(photoUri!!, "${user.email}_${user.username}")
             authViewModel.uploadPhotoState.collect{
                 when(it.status){
                     Status.SUCCESS -> {
                         it.data?.let { data ->
-                            newUser.profilePicture = data
+                            user.profilePicture = data
+                            authViewModel.createNewUser(user)
+                            observeCreateStatus()
                         }
                     }
                     Status.ERROR -> {
+                        hideProgressBar()
                         it.message?.let {msg ->
                             Toast.makeText(requireContext(), "Register Failed : $msg", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             }
+        }else{
+            authViewModel.createNewUser(user)
+            observeCreateStatus()
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.P)
-    private fun registerByEmail(view: View){
-        authViewModel.registerWithEmail(newUser.email, newUser.password)
-        lifecycleScope.launch {
-            authViewModel.registerWithEmailState.collect {
-                when(it.status) {
-                        Status.LOADING -> {
-                            binding.progressBarRegisterEmail.visibility = View.VISIBLE
-                            binding.buttonRlRegister.visibility = View.INVISIBLE
-                        }
-                        Status.SUCCESS -> {
-                            binding.progressBarRegisterEmail.visibility = View.INVISIBLE
-                            binding.buttonRlRegister.visibility = View.VISIBLE
-                            it.data?.let{data ->
-                                newUser.email = data.email.toString()
-                                newUser.firstName = data.displayName.toString()
-                                newUser.lastName = ""
-                            }
-                            Toast.makeText(requireContext(), "Register Success $newUser", Toast.LENGTH_SHORT).show()
-                        }
-                    else -> {
-                        binding.progressBarRegisterEmail.visibility = View.INVISIBLE
-                        binding.buttonRlRegister.visibility = View.VISIBLE
-                            it.message?.let {msg ->
-                                Toast.makeText(
-                                    context,
-                                    "Failed: $msg",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
+    suspend fun observeCreateStatus(){
+        authViewModel.createNewUserState.collect{createStatus ->
+            when(createStatus.status){
+                Status.SUCCESS->{
+                    hideProgressBar()
+                    Toast.makeText(requireContext(), "Register Success $newUser", Toast.LENGTH_SHORT).show()
+                }
+                Status.ERROR->{
+                    hideProgressBar()
+                    createStatus.message?.let {msg ->
+                        Toast.makeText(context,"Failed Create NewUser 1: $msg",Toast.LENGTH_SHORT).show()
+                        Log.d("auth", "Failed Create NewUser: $msg")
+                    }
                 }
             }
         }
@@ -185,15 +207,9 @@ class AccountSetup3Fragment : Fragment() {
         builder.setTitle("Add Photo")
         builder.setItems(options){dialog, item ->
             when(item){
-                0 -> {
-                    openCamera()
-                }
-                1 -> {
-                    openGallery()
-                }
-                2 -> {
-                    dialog.dismiss()
-                }
+                0 -> openCamera()
+                1 -> openGallery()
+                2 -> dialog.dismiss()
             }
         }
         builder.show()
@@ -211,12 +227,8 @@ class AccountSetup3Fragment : Fragment() {
                     }
                 }
                 GALLERY_REQUEST_CODE -> {
-                    var contentUri = Uri.EMPTY
-                    data.data?.let {
-                        contentUri = it
-                        photoUri = it
-                    }
-                    binding.imageViewProfPict.setImageURI(contentUri)
+                    photoUri = data.data
+                    binding.imageViewProfPict.setImageURI(photoUri)
                 }
             }
         }
@@ -237,6 +249,16 @@ class AccountSetup3Fragment : Fragment() {
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path = MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
         return Uri.parse(path)
+    }
+
+    private fun hideProgressBar(){
+        binding.progressBarRegisterEmail.visibility = View.INVISIBLE
+        binding.buttonRlRegister.visibility = View.VISIBLE
+    }
+
+    private fun showProgressBar(){
+        binding.progressBarRegisterEmail.visibility = View.VISIBLE
+        binding.buttonRlRegister.visibility = View.INVISIBLE
     }
 
 

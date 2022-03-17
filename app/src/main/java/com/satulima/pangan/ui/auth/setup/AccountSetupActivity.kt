@@ -10,7 +10,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.satulima.pangan.R
 import com.satulima.pangan.databinding.ActivityAccountSetupBinding
 import com.satulima.pangan.entity.User
-import com.satulima.pangan.utility.WindowUtility
+import com.satulima.pangan.utility.setTransparentStatusBar
 
 
 class AccountSetupActivity : AppCompatActivity() {
@@ -25,7 +25,7 @@ class AccountSetupActivity : AppCompatActivity() {
 
         navController = findNavController(R.id.navHostFragmentAccountSetup)
 
-        WindowUtility.setTransparentStatusBar(window)
+        setTransparentStatusBar(window)
 
         val isByGoogle = intent.getBooleanExtra("isByGoogle", false)
         val newUser = intent.getParcelableExtra<User>("newUser")

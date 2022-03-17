@@ -17,6 +17,7 @@ import com.mazenrashed.dotsindicator.DotsIndicator
 import com.satulima.pangan.R
 import com.satulima.pangan.databinding.FragmentAccountSetup2Binding
 import com.satulima.pangan.entity.User
+import com.satulima.pangan.utility.toDate
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,7 +45,7 @@ class AccountSetup2Fragment : Fragment() {
         binding.editTextFirstname.setText(newUser.firstName)
         binding.editTextLastname.setText(newUser.lastName)
         binding.autoCompleteGender.setText(newUser.gender.ifBlank { "---" })
-        binding.editTextBirthday.setText(newUser.getBirthday())
+        binding.editTextBirthday.setText(if (newUser.birthday.day == Date().day) "" else newUser.birthday.toString())
 
         val gender = resources.getStringArray(R.array.gender)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, gender)
@@ -131,7 +132,7 @@ class AccountSetup2Fragment : Fragment() {
         newUser.firstName = binding.editTextFirstname.text.toString()
         newUser.lastName = binding.editTextLastname.text.toString()
         newUser.gender = binding.autoCompleteGender.text.toString()
-        newUser.setBirthday(binding.editTextBirthday.text.toString())
+        newUser.birthday = binding.editTextBirthday.text.toString().toDate()
     }
 
     private fun validateInput(): Boolean{
