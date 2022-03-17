@@ -20,6 +20,9 @@
         <argument
             android:name="newUser"
             app:argType="com.satulima.pangan.entity.User" />
+        <argument
+            android:name="isLogin"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/accountSetup2Fragment"

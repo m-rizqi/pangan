@@ -122,7 +122,6 @@ class AccountSetup3Fragment : Fragment() {
                     newUser.id = user.uid
                 }
                 createNewUser(newUser)
-                firebaseAuth.signOut()
             }catch (e: Exception){
                 Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_SHORT)
             }
@@ -143,7 +142,6 @@ class AccountSetup3Fragment : Fragment() {
                                 newUser.id = data.uid
                             }
                             createNewUser(newUser)
-                            FirebaseAuth.getInstance().signOut()
                         }
                     else -> {
                         hideProgressBar()

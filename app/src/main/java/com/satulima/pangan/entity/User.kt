@@ -1,6 +1,8 @@
 package com.satulima.pangan.entity
 
 import android.os.Parcelable
+import com.google.firebase.firestore.DocumentSnapshot
+import com.satulima.pangan.utility.toDate
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
@@ -10,8 +12,8 @@ data class User(
     var email: String,
     var password: String,
     var username: String,
-    var firstName: String,
-    var lastName: String,
+    var firstname: String,
+    var lastname: String,
     var gender: String,
     var birthday: Date,
     var profilePicture: String
@@ -20,7 +22,7 @@ data class User(
     constructor() : this("", "", "", "","","","", Date(), "")
 
     override fun toString(): String {
-        return "User(id='$id', email='$email', password='$password', username='$username', firstName='$firstName', lastName='$lastName', gender='$gender', birthday=$birthday, profilePicture='$profilePicture')"
+        return "User(id='$id', email='$email', password='$password', username='$username', firstName='$firstname', lastName='$lastname', gender='$gender', birthday=$birthday, profilePicture='$profilePicture')"
     }
 
 

@@ -26,24 +26,10 @@ class AuthService(private val application: Application) {
 
     @RequiresApi(Build.VERSION_CODES.P)
     suspend fun loginWithEmail(email: String, password: String): Flow<StatusState<FirebaseUser>>{
-        return flow{
-            val authInformation = MutableLiveData<StatusState<FirebaseUser>>()
-            firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(application.mainExecutor){task ->
-                    if (task.isSuccessful) {
-                        authInformation.postValue(StatusState.success(firebaseAuth.currentUser))
-                    }else{
-                        var msg = ""
-                        task.exception?.let {
-                            msg = it.message.toString()
-                        }
-                        authInformation.postValue(StatusState.error(msg))
-                    }
-                }
-            authInformation.value?.let {
-                emit(it)
-            }
-        }.flowOn(Dispatchers.IO)
+        return flow {
+            val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            emit(StatusState.success(result.user))
+        }
     }
 
     fun logout() {

@@ -30,9 +30,15 @@ class AccountSetupActivity : AppCompatActivity() {
         val isByGoogle = intent.getBooleanExtra("isByGoogle", false)
         val newUser = intent.getParcelableExtra<User>("newUser")
         val googleAccount = intent.getParcelableExtra<GoogleSignInAccount>("googleAccount")
+        val isLogin = intent.getBooleanExtra("isLogin", false)
 
         val navHost = supportFragmentManager.findFragmentById(R.id.navHostFragmentAccountSetup) as NavHostFragment
         val graph = navHost.navController.navInflater.inflate(R.navigation.accountsetup_nav_graph)
+
+        val args = Bundle()
+        args.putBoolean("isByGoogle", isByGoogle)
+        args.putParcelable("newUser", newUser)
+        args.putParcelable("googleAccount", googleAccount)
 
         if(isByGoogle){
             // Register by google account
@@ -40,13 +46,14 @@ class AccountSetupActivity : AppCompatActivity() {
             graph.setStartDestination(R.id.accountSetup2Fragment)
         }else{
             // Register by email
+            args.putBoolean("isLogin", isLogin)
             binding.dotIndicatorAccountSetup.initDots(3)
+            if (isLogin){
+                binding.dotIndicatorAccountSetup.initDots(1)
+            }
             graph.setStartDestination(R.id.accountSetup1Fragment)
         }
-        val args = Bundle()
-        args.putBoolean("isByGoogle", isByGoogle)
-        args.putParcelable("newUser", newUser)
-        args.putParcelable("googleAccount", googleAccount)
+
 
         navHost.navController.setGraph(graph,args)
 

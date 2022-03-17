@@ -164,6 +164,18 @@
             app:layout_constraintTop_toBottomOf="@id/inputLayoutConfirmPassword"
             android:visibility="visible"/>
 
+        <ProgressBar
+            android:id="@+id/progressBarLogin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toTopOf="@id/buttonNext"
+            app:layout_constraintBottom_toBottomOf="@id/buttonNext"
+            app:layout_constraintLeft_toLeftOf="@id/buttonNext"
+            app:layout_constraintRight_toRightOf="@id/buttonNext"
+            android:visibility="invisible"
+            android:progressTint="@color/main"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

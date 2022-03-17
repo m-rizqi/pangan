@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 
-class FirebaseStorageService {
+class StorageService {
     private val storageReference = FirebaseStorage.getInstance().reference
 
     fun uploadPhotoProfile(uri: Uri, imageName: String): Flow<StatusState<String>> {

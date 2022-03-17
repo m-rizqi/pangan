@@ -42,8 +42,8 @@ class AccountSetup2Fragment : Fragment() {
         newUser = args.newUser
 
 
-        binding.editTextFirstname.setText(newUser.firstName)
-        binding.editTextLastname.setText(newUser.lastName)
+        binding.editTextFirstname.setText(newUser.firstname)
+        binding.editTextLastname.setText(newUser.lastname)
         binding.autoCompleteGender.setText(newUser.gender.ifBlank { "---" })
         binding.editTextBirthday.setText(if (newUser.birthday.day == Date().day) "" else newUser.birthday.toString())
 
@@ -80,7 +80,7 @@ class AccountSetup2Fragment : Fragment() {
         binding.buttonRlNext.setOnClickListener { navigateToNextSetup(it) }
         binding.buttonRlPrev.setOnClickListener {
             updateNewUser()
-            val action = AccountSetup2FragmentDirections.setup2ToSetup1(args.isByGoogle, newUser)
+            val action = AccountSetup2FragmentDirections.setup2ToSetup1(args.isByGoogle, newUser, false)
             Navigation.findNavController(it).navigate(action)
         }
 
@@ -91,7 +91,7 @@ class AccountSetup2Fragment : Fragment() {
                     if (args.isByGoogle){
                         activity?.finish()
                     }else{
-                        val action = AccountSetup2FragmentDirections.setup2ToSetup1(args.isByGoogle, newUser)
+                        val action = AccountSetup2FragmentDirections.setup2ToSetup1(args.isByGoogle, newUser, false)
                         Navigation.findNavController(binding.root).navigate(action)
                     }
                 }
@@ -129,8 +129,8 @@ class AccountSetup2Fragment : Fragment() {
     }
 
     private fun updateNewUser(){
-        newUser.firstName = binding.editTextFirstname.text.toString()
-        newUser.lastName = binding.editTextLastname.text.toString()
+        newUser.firstname = binding.editTextFirstname.text.toString()
+        newUser.lastname = binding.editTextLastname.text.toString()
         newUser.gender = binding.autoCompleteGender.text.toString()
         newUser.birthday = binding.editTextBirthday.text.toString().toDate()
     }

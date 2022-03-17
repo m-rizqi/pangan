@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -15,7 +18,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.satulima.pangan.R
 import com.satulima.pangan.databinding.ActivityRegisterBinding
 import com.satulima.pangan.entity.User
+import com.satulima.pangan.service.Status
+import com.satulima.pangan.ui.auth.AuthViewModel
 import com.satulima.pangan.utility.setTransparentStatusBar
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
@@ -26,6 +33,8 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     val newUser = User()
     val intentRegister = Intent(".ui.auth.setup.AccountSetupActivity")
+    private val authViewModel : AuthViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +56,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onStart()
         mGoogleSignInClient.signOut()
         binding.buttonRegisterWithEmail.setOnClickListener {
+            intentRegister.putExtra("isLogin", false)
             intentRegister.putExtra("newUser", newUser)
             intentRegister.putExtra("isByGoogle", false)
             intentRegister.putExtra("googleAccount", GoogleSignInAccount.createDefault())
@@ -57,6 +67,13 @@ class RegisterActivity : AppCompatActivity() {
             binding.progressBarRegisterGoogle.visibility = View.VISIBLE
             binding.buttonRegisterWithGoogle.visibility = View.INVISIBLE
             signInGoogle()
+        }
+        binding.textviewLogin.setOnClickListener {
+            intentRegister.putExtra("isLogin", true)
+            intentRegister.putExtra("newUser", newUser)
+            intentRegister.putExtra("isByGoogle", false)
+            intentRegister.putExtra("googleAccount", GoogleSignInAccount.createDefault())
+            startActivity(intentRegister)
         }
     }
 
@@ -81,26 +98,44 @@ class RegisterActivity : AppCompatActivity() {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null){
-                newUser.email = account.email.toString()
-                account.displayName?.let {
-                    if (it.split(" ").size > 1){
-                        newUser.lastName = it.substring(it.lastIndexOf(" ")+1)
-                        newUser.firstName = it.substring(0, it.lastIndexOf(" "))
-                    }else{
-                        newUser.firstName = it
+                lifecycleScope.launch {
+                    account.email?.let {email ->
+                        authViewModel.isUserExist(email)
+                        authViewModel.isUserExistState.collect { state->
+                            when (state.status) {
+                                Status.SUCCESS -> Toast.makeText(applicationContext,"User already exist! Automatically login",Toast.LENGTH_SHORT).show()
+                                Status.ERROR -> {
+                                    newUser.email = account.email.toString()
+                                    account.displayName?.let {
+                                        if (it.split(" ").size > 1) {
+                                            newUser.lastname = it.substring(it.lastIndexOf(" ") + 1)
+                                            newUser.firstname = it.substring(0, it.lastIndexOf(" "))
+                                        } else {
+                                            newUser.firstname = it
+                                        }
+                                    }
+                                    newUser.profilePicture = account.photoUrl.toString()
+                                    hideProgressBar()
+                                    intentRegister.putExtra("isLogin", false)
+                                    intentRegister.putExtra("newUser", newUser)
+                                    intentRegister.putExtra("isByGoogle", true)
+                                    intentRegister.putExtra("googleAccount", account)
+                                    startActivity(intentRegister)
+                                }
+                            }
+                        }
                     }
                 }
-                newUser.profilePicture = account.photoUrl.toString()
-                binding.progressBarRegisterGoogle.visibility = View.INVISIBLE
-                binding.buttonRegisterWithGoogle.visibility = View.VISIBLE
-                intentRegister.putExtra("newUser", newUser)
-                intentRegister.putExtra("isByGoogle", true)
-                intentRegister.putExtra("googleAccount", account)
-                startActivity(intentRegister)
                 }
         }catch (e:ApiException){
             Toast.makeText(this, e.message.toString(), Toast.LENGTH_SHORT).show()
         }
+        hideProgressBar()
+    }
+
+    private fun hideProgressBar(){
+        binding.progressBarRegisterGoogle.visibility = View.INVISIBLE
+        binding.buttonRegisterWithGoogle.visibility = View.VISIBLE
     }
 
 }
